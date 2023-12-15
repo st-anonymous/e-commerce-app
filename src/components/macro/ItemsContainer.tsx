@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import ItemCard from './ItemCard';
 import {
   AvailableItemType,
-  FavoriteItemsType,
+  FavoriteItemType,
   ItemsContainerType,
 } from '../../Types';
 
@@ -14,7 +14,7 @@ const ItemsContainer = (props: ItemsContainerType) => {
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
-      {items.map((item: AvailableItemType | FavoriteItemsType) => {
+      {items.map((item: AvailableItemType | FavoriteItemType) => {
         return (
           <ItemCard
             key={item.id}

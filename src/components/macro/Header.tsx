@@ -5,6 +5,7 @@ import Typo from '../micro/Typo';
 import {useRecoilValue} from 'recoil';
 import CartItems from '../../data/CartItems';
 import {HeaderProps} from '../../Types';
+import {useNavigation} from '@react-navigation/native';
 
 const Header = (props: HeaderProps) => {
   const {
@@ -12,18 +13,25 @@ const Header = (props: HeaderProps) => {
     textVariant = 'b1',
     backButton = true,
     cartIcon = false,
-    isHome = false,
+    isMainScreen = false,
   } = props;
   const cartItems = useRecoilValue(CartItems);
+
+  const navigation = useNavigation();
+
+  const HandleBackPress = () => {
+    navigation.goBack();
+  };
+
   return (
     <View
       style={{
         ...styles.container,
-        height: isHome ? 100 : 60,
-        backgroundColor: isHome ? '#2A4BA0' : '#FFFFFF',
+        height: 80,
+        backgroundColor: isMainScreen ? '#2A4BA0' : '#FFFFFF',
       }}>
       {backButton ? (
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity onPress={HandleBackPress} style={styles.backButton}>
           <Image
             source={require('../../assets/icons/backIcon.png')}
             style={styles.image}
@@ -31,11 +39,12 @@ const Header = (props: HeaderProps) => {
         </TouchableOpacity>
       ) : null}
       {text ? (
-        <View style={{...styles.headerText, width: isHome ? '100%' : '70%'}}>
+        <View
+          style={{...styles.headerText, width: isMainScreen ? '100%' : '70%'}}>
           <Typo
             text={text}
             variant={textVariant}
-            color={isHome ? '#FFFFFF' : '#1E222B'}
+            color={isMainScreen ? '#FFFFFF' : '#1E222B'}
           />
         </View>
       ) : null}
@@ -43,7 +52,7 @@ const Header = (props: HeaderProps) => {
         <TouchableOpacity style={styles.cartButton}>
           <Image
             source={
-              isHome
+              isMainScreen
                 ? require('../../assets/icons/bagWhite.png')
                 : require('../../assets/icons/bagBlack.png')
             }

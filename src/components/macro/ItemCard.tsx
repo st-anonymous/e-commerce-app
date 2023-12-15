@@ -1,123 +1,72 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import Typo from '../micro/Typo';
-import {useRecoilState} from 'recoil';
-import FavoriteItems from '../../data/FavoriteItems';
-import CartItems from '../../data/CartItems';
-import AvailableItems from '../../data/AvailableItems';
 import {ItemCardTypes} from '../../Types';
+import {useNavigation} from '@react-navigation/native';
+import useFavorite from '../../hooks/useFavorite';
+import useCart from '../../hooks/useCart';
 
 const ItemCard = (props: ItemCardTypes) => {
   const {id, title, price, thumbnail, isFavorite} = props;
-  const [favoriteItems, setFavoriteItems] = useRecoilState(FavoriteItems);
-  const [cartItems, setCartItems] = useRecoilState(CartItems);
-  const [availableItems, setAvailableItems] = useRecoilState(AvailableItems);
+  const {HandleFavoriteToggle} = useFavorite();
+  const {HandleAddToCart} = useCart();
 
-  const HandleFavoriteToggle = () => {
-    let currAvailableItem = availableItems.filter(item => item.id === id)[0];
-    setAvailableItems(
-      availableItems.map(item => {
-        if (item.id === id) {
-          return {...item, isFavorite: !item.isFavorite};
-        } else {
-          return item;
-        }
-      }),
-    );
-    const isCurrFavorite = favoriteItems.filter(item => item.id === id);
-    if (isCurrFavorite.length) {
-      setFavoriteItems(prev => {
-        return prev.filter(item => item.id !== id);
-      });
-    } else {
-      setFavoriteItems(prev => {
-        return [
-          {
-            id: currAvailableItem.id,
-            title: currAvailableItem.title,
-            price: currAvailableItem.price,
-            discountPercentage: currAvailableItem.discountPercentage,
-            thumbnail: currAvailableItem.thumbnail,
-            isFavorite: true,
-          },
-          ...prev,
-        ];
-      });
-    }
-  };
+  const navigation = useNavigation();
 
-  const HandleAddToCart = () => {
-    let newCartItems;
-    let currItem = cartItems.filter(item => item.id === id)[0];
-    if (currItem) {
-      currItem = {...currItem, itemCount: currItem.itemCount + 1};
-      newCartItems = cartItems.map(item => {
-        if (item.id === id) {
-          return currItem;
-        } else {
-          return item;
-        }
-      });
-    } else {
-      const currAvailableItem = availableItems.filter(
-        item => item.id === id,
-      )[0];
-      currItem = {
-        id: currAvailableItem.id,
-        title: currAvailableItem.title,
-        price: currAvailableItem.price,
-        discountPercentage: currAvailableItem.discountPercentage,
-        thumbnail: currAvailableItem.thumbnail,
-        itemCount: 1,
-      };
-      newCartItems = [...cartItems, currItem];
-    }
-
-    setCartItems(newCartItems);
+  const HandleProductDetails = () => {
+    navigation.navigate('ProductDisplay' as never);
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        onPress={HandleFavoriteToggle}
-        style={styles.toggleFavorite}>
-        <Image
-          source={
-            isFavorite
-              ? require('../../assets/icons/favorite.png')
-              : require('../../assets/icons/non_favorite.png')
-          }
-          style={styles.favoriteImage}
-        />
-      </TouchableOpacity>
-      <View>
-        <Image
-          source={{
-            uri: thumbnail,
-          }}
-          style={styles.thumbnailImage}
-        />
-      </View>
-      <View style={styles.lowerContainer}>
-        <View>
-          <Typo
-            text={`$ ${price}`}
-            variant={'b2'}
-            styleProps={{fontWeight: 'bold', color: '#1E222B'}}
-          />
-          <Typo text={title} variant={'l'} styleProps={{color: '#616A7D'}} />
-        </View>
+    <TouchableWithoutFeedback onPress={HandleProductDetails}>
+      <View style={styles.container}>
         <TouchableOpacity
-          onPress={HandleAddToCart}
-          style={styles.addToCartContainer}>
+          onPress={() => HandleFavoriteToggle(id)}
+          style={styles.toggleFavorite}>
           <Image
-            source={require('../../assets/icons/plus.png')}
-            style={styles.addToCartImage}
+            source={
+              isFavorite
+                ? require('../../assets/icons/favorite.png')
+                : require('../../assets/icons/non_favorite.png')
+            }
+            style={styles.favoriteImage}
           />
         </TouchableOpacity>
+        <View>
+          <Image
+            source={{
+              uri: thumbnail,
+            }}
+            style={styles.thumbnailImage}
+          />
+        </View>
+        <View style={styles.lowerContainer}>
+          <View>
+            <Typo
+              text={`$ ${price}`}
+              variant={'b2'}
+              styleProps={{fontWeight: 'bold', color: '#1E222B'}}
+            />
+            <Typo text={title} variant={'l'} styleProps={{color: '#616A7D'}} />
+          </View>
+          <TouchableOpacity
+            onPress={() => HandleAddToCart(id)}
+            style={styles.addToCartContainer}>
+            <Image
+              source={require('../../assets/icons/plus.png')}
+              style={styles.addToCartImage}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

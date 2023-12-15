@@ -15,7 +15,22 @@ export type AvailableItemType = {
   isFavorite?: boolean;
 };
 
-export type FavoriteItemsType = {
+export type CurrentItemType = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: Array<string>;
+  isFavorite?: boolean;
+};
+
+export type FavoriteItemType = {
   id: number;
   title: string;
   price: number;
@@ -38,7 +53,7 @@ export type HeaderProps = {
   textVariant?: 'h3' | 'b1';
   backButton?: boolean;
   cartIcon?: boolean;
-  isHome?: boolean;
+  isMainScreen?: boolean;
 };
 
 export type ItemCardTypes = {
@@ -57,5 +72,5 @@ export type TypoType = {
 };
 
 export type ItemsContainerType = {
-  items: Array<AvailableItemType> | Array<FavoriteItemsType>;
+  items: Array<AvailableItemType> | Array<FavoriteItemType>;
 };

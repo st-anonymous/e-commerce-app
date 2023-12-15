@@ -18,7 +18,7 @@ const Home = () => {
         textVariant={'h3'}
         backButton={false}
         cartIcon={true}
-        isHome={true}
+        isMainScreen={true}
       />
       <View style={styles.container}>
         <SearchBox />

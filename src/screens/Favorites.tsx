@@ -9,7 +9,13 @@ const Favorites = () => {
   const favoriteItems = useRecoilValue(FavoriteItems);
   return (
     <>
-      <Header text={'favorites'} backButton={false} cartIcon={true} />
+      <Header
+        text={'Favorites'}
+        textVariant={'h3'}
+        backButton={false}
+        cartIcon={true}
+        isMainScreen={true}
+      />
       <ItemsContainer items={favoriteItems} />
       <Tabs />
     </>

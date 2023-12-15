@@ -5,6 +5,7 @@ import Home from './Home';
 import Favorites from './Favorites';
 import useInit from '../hooks/useInit';
 import Categories from './Categories';
+import ProductDisplay from './ProductDisplay';
 
 const Navigator = () => {
   const Stack = createNativeStackNavigator();
@@ -31,6 +32,11 @@ const Navigator = () => {
         options={{headerShown: false}}
         name={'Favorites'}
         component={Favorites}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={'ProductDisplay'}
+        component={ProductDisplay}
       />
     </Stack.Navigator>
   );
