@@ -1,20 +1,27 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Typo from '../micro/Typo';
 import {useRecoilValue} from 'recoil';
 import CartItems from '../../data/CartItems';
-
-type HeaderProps = {
-  text?: string;
-  backButton?: boolean;
-  cartIcon?: boolean;
-};
+import {HeaderProps} from '../../Types';
 
 const Header = (props: HeaderProps) => {
-  const {text = '', backButton = true, cartIcon = false} = props;
+  const {
+    text = '',
+    textVariant = 'b1',
+    backButton = true,
+    cartIcon = false,
+    isHome = false,
+  } = props;
   const cartItems = useRecoilValue(CartItems);
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        height: isHome ? 100 : 60,
+        backgroundColor: isHome ? '#2A4BA0' : '#FFFFFF',
+      }}>
       {backButton ? (
         <TouchableOpacity style={styles.backButton}>
           <Image
@@ -24,14 +31,22 @@ const Header = (props: HeaderProps) => {
         </TouchableOpacity>
       ) : null}
       {text ? (
-        <View style={styles.headerText}>
-          <Typo text={text} variant={'b1'} color={'#1E222B'} />
+        <View style={{...styles.headerText, width: isHome ? '100%' : '70%'}}>
+          <Typo
+            text={text}
+            variant={textVariant}
+            color={isHome ? '#FFFFFF' : '#1E222B'}
+          />
         </View>
       ) : null}
       {cartIcon ? (
         <TouchableOpacity style={styles.cartButton}>
           <Image
-            source={require('../../assets/icons/bagBlack.png')}
+            source={
+              isHome
+                ? require('../../assets/icons/bagWhite.png')
+                : require('../../assets/icons/bagBlack.png')
+            }
             style={styles.image}
           />
           {cartItems.length ? (
@@ -53,13 +68,12 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
     width: '100%',
     paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F8F7FB',
+    zIndex: 2,
   },
   backButton: {
     position: 'absolute',

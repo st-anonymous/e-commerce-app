@@ -1,12 +1,7 @@
 import React from 'react';
 import {Text, TextStyle} from 'react-native';
+import {TypoType} from '../../Types';
 
-type TypoType = {
-  text: string;
-  variant: 'h1' | 'h2' | 'h3' | 'h4' | 'b1' | 'b2' | 'l' | 'btn1' | 'btn2';
-  styleProps?: TextStyle;
-  color?: TextStyle['color'];
-};
 const Typo = (props: TypoType) => {
   const {text, variant, styleProps, color = '#8891A5'} = props;
   let styles: TextStyle = {fontFamily: 'Manrope', color};

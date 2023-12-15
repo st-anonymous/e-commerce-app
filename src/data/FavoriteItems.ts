@@ -1,6 +1,7 @@
 import {atom} from 'recoil';
+import {FavoriteItemsType} from '../Types';
 
-const FavoriteItems = atom({
+const FavoriteItems = atom<Array<FavoriteItemsType>>({
   key: 'FavoriteItems',
   default: [],
 });
