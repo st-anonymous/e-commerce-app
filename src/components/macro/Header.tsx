@@ -16,11 +16,19 @@ const Header = (props: HeaderProps) => {
     isMainScreen = false,
   } = props;
   const cartItems = useRecoilValue(CartItems);
+  const totalItems = cartItems.reduce(
+    (total, cartItem) => total + cartItem.itemCount,
+    0,
+  );
 
   const navigation = useNavigation();
 
   const HandleBackPress = () => {
     navigation.goBack();
+  };
+
+  const HandleCartPress = () => {
+    navigation.navigate('Checkout' as never);
   };
 
   return (
@@ -49,7 +57,7 @@ const Header = (props: HeaderProps) => {
         </View>
       ) : null}
       {cartIcon ? (
-        <TouchableOpacity style={styles.cartButton}>
+        <TouchableOpacity onPress={HandleCartPress} style={styles.cartButton}>
           <Image
             source={
               isMainScreen
@@ -58,10 +66,10 @@ const Header = (props: HeaderProps) => {
             }
             style={styles.image}
           />
-          {cartItems.length ? (
+          {totalItems ? (
             <View style={styles.counter}>
               <Typo
-                text={cartItems.length.toString()}
+                text={totalItems.toString()}
                 variant={'b2'}
                 color={'#FFFFFF'}
               />

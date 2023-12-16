@@ -81,3 +81,14 @@ export type ButtonTypes = {
   text: string;
   onClick: ((event: GestureResponderEvent) => void) | undefined;
 };
+
+export type CheckoutItemType = {
+  id: number;
+  title: string;
+  price: number;
+  discountPercentage: number;
+  thumbnail: string;
+  itemCount: number;
+  HandleAddToCart: (id: number) => void;
+  HandleRemoveFromCart: (id: number) => void;
+};

@@ -8,6 +8,7 @@ import {useRecoilValue} from 'recoil';
 import CurrentItem from '../data/CurrentItem';
 import Button from '../components/micro/Button';
 import useCart from '../hooks/useCart';
+import {useNavigation} from '@react-navigation/native';
 
 const ProductDisplay = () => {
   const currentItem = useRecoilValue(CurrentItem);
@@ -16,9 +17,11 @@ const ProductDisplay = () => {
   const offer = (currentItem.price * currentItem.discountPercentage) / 100;
   const price = currentItem.price - offer;
 
+  const navigation = useNavigation();
+
   const HandleBuyNow = () => {
     HandleAddToCart(currentItem.id);
-    // navigation to checkout page
+    navigation.navigate('Checkout' as never);
   };
 
   return (
