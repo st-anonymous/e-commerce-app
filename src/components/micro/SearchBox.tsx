@@ -17,11 +17,6 @@ const SearchBox = () => {
       } else {
         setRenderingItems(
           availableItems.filter(item => {
-            console.log(
-              item.description,
-              searchText,
-              item.description.toLowerCase().includes(searchText.toLowerCase()),
-            );
             return item.description
               .toLowerCase()
               .includes(searchText.toLowerCase());
