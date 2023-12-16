@@ -15,6 +15,21 @@ export type AvailableItemType = {
   isFavorite?: boolean;
 };
 
+export type RenderingItemType = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: Array<string>;
+  isFavorite?: boolean;
+};
+
 export type CurrentItemType = {
   id: number;
   title: string;

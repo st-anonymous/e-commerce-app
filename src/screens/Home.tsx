@@ -7,10 +7,10 @@ import Header from '../components/macro/Header';
 import SearchBox from '../components/micro/SearchBox';
 import ItemsContainer from '../components/macro/ItemsContainer';
 import {useRecoilState} from 'recoil';
-import AvailableItems from '../data/AvailableItems';
+import RenderingItems from '../data/RenderingItems';
 
 const Home = () => {
-  const [availableItems] = useRecoilState(AvailableItems);
+  const [renderingItems] = useRecoilState(RenderingItems);
   return (
     <>
       <Header
@@ -29,7 +29,7 @@ const Home = () => {
             styleProps={{color: '#1E222B', fontWeight: '400'}}
           />
         </View>
-        <ItemsContainer items={availableItems} />
+        <ItemsContainer items={renderingItems} />
       </View>
       <Tabs />
     </>
