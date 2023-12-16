@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../components/macro/Header';
 import CheckoutItemCard from '../components/macro/CheckoutItemCard';
 import useCart from '../hooks/useCart';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
 import Typo from '../components/micro/Typo';
 import Button from '../components/micro/Button';
 import {useNavigation} from '@react-navigation/native';
@@ -30,6 +30,7 @@ const Checkout = () => {
   const navigation = useNavigation();
 
   const HandleProceedToCheckout = () => {
+    ToastAndroid.show('You have successfully Ordered', ToastAndroid.LONG);
     ClearCart();
     navigation.navigate('Home' as never);
   };
