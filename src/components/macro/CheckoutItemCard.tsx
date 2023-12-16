@@ -2,6 +2,10 @@ import React from 'react';
 import Typo from '../micro/Typo';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {CheckoutItemType} from '../../Types';
+import CurrentItem from '../../data/CurrentItem';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import {useNavigation} from '@react-navigation/native';
+import AvailableItems from '../../data/AvailableItems';
 
 const CheckoutItemCard = (props: CheckoutItemType) => {
   const {
@@ -14,22 +18,34 @@ const CheckoutItemCard = (props: CheckoutItemType) => {
     HandleAddToCart,
     HandleRemoveFromCart,
   } = props;
+  const availableItems = useRecoilValue(AvailableItems);
+  const setCurrentItem = useSetRecoilState(CurrentItem);
+  const navigation = useNavigation();
 
   const offer = (price * discountPercentage) / 100;
   const sellPrice = price - offer;
 
+  const HandleProductDetails = () => {
+    setCurrentItem(availableItems.filter(item => item.id === id)[0]);
+    navigation.navigate('ProductDisplay' as never);
+  };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
-        <Image source={{uri: thumbnail}} style={styles.thumbnailStyle} />
-        <View style={styles.titleAndPrice}>
+        <TouchableOpacity onPress={HandleProductDetails}>
+          <Image source={{uri: thumbnail}} style={styles.thumbnailStyle} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={HandleProductDetails}
+          style={styles.titleAndPrice}>
           <Typo color={'#1E222B'} text={title} variant={'b1'} />
           <Typo
             color={'#1E222B'}
             text={sellPrice?.toFixed(2)?.toString()}
             variant={'b2'}
           />
-        </View>
+        </TouchableOpacity>
         <View style={styles.itemCounter}>
           <TouchableOpacity
             onPress={() => HandleRemoveFromCart(id)}
@@ -99,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   horizontalDivider: {
-    height: 1,
+    height: 0.5,
     width: '90%',
     backgroundColor: '#1E222B',
     alignSelf: 'center',

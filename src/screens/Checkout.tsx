@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import Header from '../components/macro/Header';
 import CheckoutItemCard from '../components/macro/CheckoutItemCard';
@@ -48,7 +49,7 @@ const Checkout = () => {
           );
         })}
       </ScrollView>
-      <View style={styles.checkoutDetails}>
+      <View style={{...styles.checkoutDetails, height: total ? '30%' : '20%'}}>
         <View style={styles.checkoutValues}>
           <Typo text={'Subtotal'} variant={'b1'} />
           <Typo
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
   checkoutDetails: {
     width: '95%',
     alignSelf: 'center',
-    height: '30%',
     elevation: 5,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,

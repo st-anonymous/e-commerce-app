@@ -37,7 +37,11 @@ const ProductDisplay = () => {
           ratingColor={'#F9B023'}
         />
       </View>
-      <ProductImageCarousal images={currentItem.images} />
+      <ProductImageCarousal
+        id={currentItem.id}
+        images={currentItem.images}
+        isFavorite={currentItem.isFavorite ? true : false}
+      />
       <View style={styles.priceTag}>
         <Typo
           text={`$${currentItem.price.toString()}`}

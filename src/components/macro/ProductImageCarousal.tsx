@@ -1,12 +1,26 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useState} from 'react';
-import {Dimensions, Image, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
+import useFavorite from '../../hooks/useFavorite';
 
-const ProductImageCarousal = (props: {images: Array<string>}) => {
-  const {images} = props;
+const ProductImageCarousal = (props: {
+  id: number;
+  images: Array<string>;
+  isFavorite: boolean;
+}) => {
+  const {id, images, isFavorite} = props;
   const [index, setIndex] = useState(0);
+  const [isAddedToFavorites, setIsAddedToFavorites] = useState(isFavorite);
   const width = Dimensions.get('window').width;
+
+  const {HandleFavoriteToggle} = useFavorite();
 
   const RenderImage = useCallback((item: string) => {
     return (
@@ -34,6 +48,21 @@ const ProductImageCarousal = (props: {images: Array<string>}) => {
         }}
         renderItem={({item}) => RenderImage(item)}
       />
+      <TouchableOpacity
+        onPress={() => {
+          HandleFavoriteToggle(id);
+          setIsAddedToFavorites(prev => !prev);
+        }}
+        style={styles.favoriteToggleButton}>
+        <Image
+          source={
+            isAddedToFavorites
+              ? require('../../assets/icons/favorite.png')
+              : require('../../assets/icons/non_favorite.png')
+          }
+          style={styles.favoriteImage}
+        />
+      </TouchableOpacity>
       <View style={styles.imageCounterContainer}>
         {images.map(image => {
           return (
@@ -75,5 +104,18 @@ const styles = StyleSheet.create({
     width: 15,
     borderRadius: 50,
     margin: 2.5,
+  },
+  favoriteToggleButton: {
+    position: 'absolute',
+    top: 10,
+    right: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 15,
+    padding: 10,
+  },
+  favoriteImage: {
+    height: 20,
+    aspectRatio: 1,
+    resizeMode: 'center',
   },
 });
