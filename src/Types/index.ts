@@ -1,4 +1,4 @@
-import {TextStyle} from 'react-native';
+import {GestureResponderEvent, TextStyle} from 'react-native';
 
 export type AvailableItemType = {
   id: number;
@@ -73,4 +73,11 @@ export type TypoType = {
 
 export type ItemsContainerType = {
   items: Array<AvailableItemType> | Array<FavoriteItemType>;
+};
+
+export type ButtonTypes = {
+  type: 'primary' | 'secondary';
+  size: 'small' | 'big';
+  text: string;
+  onClick: ((event: GestureResponderEvent) => void) | undefined;
 };

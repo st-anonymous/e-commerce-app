@@ -40,7 +40,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    height: '90%',
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',

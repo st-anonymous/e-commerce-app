@@ -12,15 +12,21 @@ import {ItemCardTypes} from '../../Types';
 import {useNavigation} from '@react-navigation/native';
 import useFavorite from '../../hooks/useFavorite';
 import useCart from '../../hooks/useCart';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import CurrentItem from '../../data/CurrentItem';
+import AvailableItems from '../../data/AvailableItems';
 
 const ItemCard = (props: ItemCardTypes) => {
   const {id, title, price, thumbnail, isFavorite} = props;
   const {HandleFavoriteToggle} = useFavorite();
   const {HandleAddToCart} = useCart();
+  const availableItems = useRecoilValue(AvailableItems);
+  const setCurrentItem = useSetRecoilState(CurrentItem);
 
   const navigation = useNavigation();
 
   const HandleProductDetails = () => {
+    setCurrentItem(availableItems.filter(item => item.id === id)[0]);
     navigation.navigate('ProductDisplay' as never);
   };
 
