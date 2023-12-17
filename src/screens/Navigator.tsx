@@ -1,50 +1,38 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Splash from './Splash';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './Home';
 import Favorites from './Favorites';
 import useInit from '../hooks/useInit';
 import Categories from './Categories';
-import ProductDisplay from './ProductDisplay';
-import Checkout from './Checkout';
+import GeneralTab from './GeneralTab';
 
 const Navigator = () => {
-  const Stack = createNativeStackNavigator();
+  const Tab = createBottomTabNavigator();
   useInit();
 
   return (
-    <Stack.Navigator initialRouteName={'Splash'}>
-      <Stack.Screen
-        options={{headerShown: false}}
-        name={'Splash'}
-        component={Splash}
-      />
-      <Stack.Screen
+    <Tab.Navigator>
+      <Tab.Screen
         options={{headerShown: false}}
         name={'Home'}
         component={Home}
       />
-      <Stack.Screen
+      <Tab.Screen
         options={{headerShown: false}}
         name={'Categories'}
         component={Categories}
       />
-      <Stack.Screen
+      <Tab.Screen
         options={{headerShown: false}}
         name={'Favorites'}
         component={Favorites}
       />
-      <Stack.Screen
+      <Tab.Screen
         options={{headerShown: false}}
-        name={'ProductDisplay'}
-        component={ProductDisplay}
+        name={'More'}
+        component={GeneralTab}
       />
-      <Stack.Screen
-        options={{headerShown: false}}
-        name={'Checkout'}
-        component={Checkout}
-      />
-    </Stack.Navigator>
+    </Tab.Navigator>
   );
 };
 

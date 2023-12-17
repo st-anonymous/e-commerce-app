@@ -107,3 +107,7 @@ export type CheckoutItemType = {
   HandleAddToCart: (id: number) => void;
   HandleRemoveFromCart: (id: number) => void;
 };
+
+export type TabMenuType = {
+  screen: 'Home' | 'Categories' | 'Favorites' | 'More';
+};

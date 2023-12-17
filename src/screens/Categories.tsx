@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import Tabs from '../components/macro/Tabs';
 import Typo from '../components/micro/Typo';
 
 const Categories = () => {
@@ -9,7 +8,6 @@ const Categories = () => {
       <View style={styles.container}>
         <Typo text={'Categories coming soon'} variant={'h1'} />
       </View>
-      <Tabs />
     </>
   );
 };

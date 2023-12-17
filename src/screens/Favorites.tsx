@@ -1,5 +1,4 @@
 import React from 'react';
-import Tabs from '../components/macro/Tabs';
 import Header from '../components/macro/Header';
 import {useRecoilValue} from 'recoil';
 import FavoriteItems from '../data/FavoriteItems';
@@ -17,7 +16,6 @@ const Favorites = () => {
         isMainScreen={true}
       />
       <ItemsContainer items={favoriteItems} />
-      <Tabs />
     </>
   );
 };
