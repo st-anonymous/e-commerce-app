@@ -1,43 +1,43 @@
-import React, {useMemo} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import {Image, StyleSheet, View} from 'react-native';
 import Typo from './Typo';
-import {useRoute, useNavigation} from '@react-navigation/native';
 import {TabMenuType} from '../../Types';
 
 const TabMenu = (props: TabMenuType) => {
-  const {screen} = props;
-  const route = useRoute();
-  const screenName = useMemo(() => route.name, [route.name]);
-  const navigation = useNavigation();
+  const {screen, focused} = props;
 
-  const HandleTabMenuClick = () => {
-    if (screen !== 'More') {
-      navigation.navigate(screen as never);
-    }
-  };
-  let image = 'more_vertical';
+  let image = require('../../assets/icons/more_vertical.png');
+  switch (screen) {
+    case 'Home':
+      image = focused
+        ? require('../../assets/icons/highlightedHome.png')
+        : require('../../assets/icons/home.png');
+      break;
+    case 'Categories':
+      image = focused
+        ? require('../../assets/icons/highlightedCategories.png')
+        : require('../../assets/icons/categories.png');
+      break;
+    case 'Favorites':
+      image = focused
+        ? require('../../assets/icons/favorites.png')
+        : require('../../assets/icons/favorites.png');
+      break;
+  }
 
   return (
     <View style={styles.buttonWholeContainer}>
-      {screen === screenName ? (
+      {focused ? (
         <View style={styles.highlightedButtonOutside}>
           <View style={styles.highlightedButton}>
-            <Image
-              source={require('../../assets/icons/more_vertical.png')}
-              style={styles.buttonImage}
-            />
+            <Image source={image} style={styles.buttonImage} />
           </View>
         </View>
       ) : (
-        <TouchableOpacity
-          onPress={HandleTabMenuClick}
-          style={styles.buttonContainer}>
-          <Image
-            source={require(`../../assets/icons/${image}.png`)}
-            style={styles.buttonImage}
-          />
+        <View style={styles.buttonContainer}>
+          <Image source={image} style={styles.buttonImage} />
           <Typo text={screen} variant={'btn2'} />
-        </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     width: '20%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -64,7 +63,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     padding: 5,
     borderRadius: 35,
-    backgroundColor: 'transparent',
     top: -65,
   },
   highlightedButton: {

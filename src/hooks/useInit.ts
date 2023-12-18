@@ -9,7 +9,7 @@ const useInit = () => {
   (async () => {
     const itemsData = await axios.get('https://dummyjson.com/products');
     setAvailableItems(itemsData.data.products);
-    navigation.navigate('Home' as never);
+    navigation.navigate('Main' as never);
   })();
 };
 

@@ -1,11 +1,14 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Splash from './Splash';
-import ProductDisplay from './ProductDisplay';
-import Checkout from './Checkout';
+import Splash from '../Splash';
+import ProductDisplay from '../ProductDisplay';
+import Checkout from '../Checkout';
+import Tabs from './Tabs';
+import useInit from '../../hooks/useInit';
 
-const GeneralTab = () => {
+const Navigator = () => {
   const Stack = createNativeStackNavigator();
+  useInit();
 
   return (
     <Stack.Navigator initialRouteName={'Splash'}>
@@ -13,6 +16,11 @@ const GeneralTab = () => {
         options={{headerShown: false}}
         name={'Splash'}
         component={Splash}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={'Main'}
+        component={Tabs}
       />
       <Stack.Screen
         options={{headerShown: false}}
@@ -28,4 +36,4 @@ const GeneralTab = () => {
   );
 };
 
-export default GeneralTab;
+export default Navigator;
