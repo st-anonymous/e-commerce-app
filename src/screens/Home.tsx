@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import Tabs from '../components/macro/Tabs';
 import Typo from '../components/micro/Typo';
 import Header from '../components/macro/Header';
 import SearchBox from '../components/micro/SearchBox';
@@ -31,7 +30,6 @@ const Home = () => {
         </View>
         <ItemsContainer items={renderingItems} />
       </View>
-      <Tabs />
     </>
   );
 };

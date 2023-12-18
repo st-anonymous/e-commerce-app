@@ -6,29 +6,45 @@ import AvailableItems from '../../data/AvailableItems';
 import RenderingItems from '../../data/RenderingItems';
 
 const SearchBox = () => {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState<string | null>(null);
   const availableItems = useRecoilValue(AvailableItems);
   const setRenderingItems = useSetRecoilState(RenderingItems);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchText === '') {
-        setRenderingItems(availableItems);
-      } else {
-        setRenderingItems(
-          availableItems.filter(item => {
-            return item.description
-              .toLowerCase()
-              .includes(searchText.toLowerCase());
-          }),
-        );
-      }
-    }, 1000);
+    if (searchText !== null) {
+      const timer = setTimeout(() => {
+        if (searchText === '') {
+          setRenderingItems(availableItems);
+        } else {
+          setRenderingItems(
+            availableItems.filter(item => {
+              return item.description
+                .toLowerCase()
+                .includes(searchText.toLowerCase());
+            }),
+          );
+        }
+      }, 1000);
 
-    return () => {
-      clearTimeout(timer);
-    };
+      return () => {
+        clearTimeout(timer);
+      };
+    }
   }, [searchText]);
+
+  useEffect(() => {
+    if (!searchText) {
+      setRenderingItems(availableItems);
+    } else {
+      setRenderingItems(
+        availableItems.filter(item => {
+          return item.description
+            .toLowerCase()
+            .includes(searchText.toLowerCase());
+        }),
+      );
+    }
+  }, [availableItems]);
 
   return (
     <View style={styles.container}>
@@ -36,7 +52,7 @@ const SearchBox = () => {
         placeholder={'Search Products or Store'}
         placeholderTextColor={'#AAAAAA'}
         style={styles.textInput}
-        value={searchText}
+        value={searchText as string}
         onChangeText={setSearchText}
       />
     </View>
