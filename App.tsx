@@ -15,11 +15,11 @@ const App = (): React.JSX.Element => {
   return (
     <SafeAreaProvider style={backgroundStyle}>
       <RecoilRoot>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
         <NavigationContainer>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-          />
           <Navigator />
         </NavigationContainer>
       </RecoilRoot>

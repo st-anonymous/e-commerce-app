@@ -110,5 +110,5 @@ export type CheckoutItemType = {
 
 export type TabMenuType = {
   screen: 'Home' | 'Categories' | 'Favorites' | 'More';
-  focused: boolean;
+  focused?: boolean;
 };
